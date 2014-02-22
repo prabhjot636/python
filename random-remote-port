@@ -1,0 +1,42 @@
+###################################################
+# Author: Prabhjot Singh
+#This is the server script
+import socket 
+host = "127.0.0.1" 
+def startServer():
+   mySocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+   mySocket.bind((host,0)) 
+   mySocket.listen(1)
+   port = mySocket.getsockname()[1]
+   print "Port opened for incoming connections %d"%port
+   (clientSocket, clientDetails) = mySocket.accept()
+   print "Got a client: ", clientDetails
+   clientSocket.close()
+   mySocket.close()
+
+startServer()
+
+#Server script ends
+##################################################
+
+##################################################
+#Author: Prabhjot Singh
+#This is the client script 
+import socket
+host = "127.0.0.1"
+def startConn():
+    for port in range(1024,65336):
+        try:
+            myClientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            print "Trying remote port: ",port
+            myClientSocket.connect((host,port))
+            print "Connected to remote port: ",port
+            myClientSocket.close()
+        except socket.error as msg:
+            myClientSocket.close()
+            continue
+
+startConn()
+
+#Client script ends
+################################################## 
